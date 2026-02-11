@@ -15,9 +15,9 @@ export function SipIndex() {
     // const [ filterBy, setFilterBy ] = useState(sipService.getDefaultFilter())
     const sips = useSelector(storeState => storeState.sipModule.sips)
 
-    useEffect(() => {
-        // loadSips(filterBy)
-    }, [filterBy])
+    // useEffect(() => {
+    //     // loadSips(filterBy)
+    // }, [filterBy])
 
     async function onRemoveSip(sipId) {
         try {
@@ -58,7 +58,7 @@ export function SipIndex() {
                 <h2>Sips</h2>
                 {userService.getLoggedinUser() && <button onClick={onAddSip}>Add a Sip</button>}
             </header>
-            <SipFilter filterBy={filterBy} setFilterBy={setFilterBy} />
+            {/* <SipFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
             <SipList 
                 sips={sips}
                 onRemoveSip={onRemoveSip} 

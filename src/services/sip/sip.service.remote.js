@@ -8,8 +8,8 @@ export const sipService = {
     addSipMsg
 }
 
-async function query(filterBy = { txt: '', minSpeed: 0 }) {
-    return httpService.get(`sip`, filterBy)
+async function query() {
+    return httpService.get(`sip`)
 }
 
 function getById(sipId) {
