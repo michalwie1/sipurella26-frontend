@@ -1,16 +1,24 @@
 import { useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
+
+
+
 
 export function AppFooter() {
 	const count = useSelector(storeState => storeState.userModule.count)
 
 	return (
 		<footer className="app-footer full">
-			<p>Coffeerights &copy; ☕ </p>
-			<p>Count: {count}</p>
-            
-            {import.meta.env.VITE_LOCAL ? 
-                <span className="local-services">Local Services</span> : 
-                <span className="remote-services">Remote Services</span>}
+			<p>סיפורלה 2026 &copy;</p>
+			<a href="https://www.instagram.com/sipurella">
+				<FontAwesomeIcon icon={faInstagram} />
+			</a>
+			<a href="https://mail.google.com/mail/?view=cm&to=sipurella.books@gmail.com">
+				<FontAwesomeIcon icon={faEnvelope} />
+			</a>
+		
 		</footer>
 	)
 }

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"
 import { useForm } from 'react-hook-form'
 
 // import { submitStory } from './services/sipurella.service.js';
 
 
 
-export function FormStep3 ({ back, data, onData }) {
+export function FormStep3 ({ onSubmit, addStepParam, back }) {
 
     const { register, handleSubmit } = useForm()
     const [images, setImages] = useState([]);
     
 
-    function onSubmit(data) {
-    console.log(data)
-  }
+  useEffect(() => {
+            addStepParam()
+    }, [])
 
   const handleFiles = (files) => {
     const fileArray = Array.from(files);
@@ -40,12 +40,9 @@ export function FormStep3 ({ back, data, onData }) {
 //   const handleFinalSubmit = async () => {
 //   try {
 //     const response = await submitStory({
-//       fields: data,        // your collected form data
-//       // audioFile: recordedBlob, // optional: audio blob
-//     });
-
+//       fields: data,     
+//     })
 //     console.log('✅ Server response:', response);
-//     // Show success or move to next screen
 //   } catch (err) {
 //     alert('Something went wrong 😢');
 //   }
@@ -82,10 +79,10 @@ export function FormStep3 ({ back, data, onData }) {
       onDragOver={(ev) => ev.preventDefault()}
       onDrop={handleDrop}
     >
-      <label htmlFor="fileInput" className="upload-area">
+      <label htmlFor="imgs" className="upload-area">
         <p>📸 Drag and drop up to 20 images here<br />or click to select from your computer</p>
         <input
-          id="fileInput"
+          id="imgs"
           type="file"
           accept="image/*"
           multiple
@@ -119,12 +116,11 @@ export function FormStep3 ({ back, data, onData }) {
 
 
         {/* <input type="submit" /> */}
-        <button onClick={handleFinalSubmit}>שליחה</button>
+        <button type="submit">שליחה</button>
+        {/* <button onClick={handleFinalSubmit}>שליחה</button> */}
 
       </form>
     </section>)
 
-};
-
-export default FormStep3;
+}
 

@@ -7,24 +7,21 @@ import { sipService as remote } from './sip.service.remote'
 
 function getEmptySip() {
 	return {
-        _id: '',
-		vendor: makeId(),
-		speed: getRandomIntInclusive(80, 240),
-		msgs: [],
+        id: makeId(),
+        giverName: '',
+		email: '',
+		receiverName: '',
+		relation: '',
+        sipurellatEv: '',
+        storyInput: [],
+        wish: '',
+        backCover: '',
+        imgs: []
 	}
 }
 
-function getDefaultFilter() {
-    return {
-        txt: '',
-        minSpeed: '',
-        sortField: '',
-        sortDir: '',
-    }
-}
-
 const service = (VITE_LOCAL === 'true') ? local : remote
-export const sipService = { getEmptySip, getDefaultFilter, ...service }
+export const sipService = { getEmptySip, ...service }
 
 // Easy access to this service from the dev tools console
 // when using script - dev / dev:local

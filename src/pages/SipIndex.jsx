@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { loadSips, addSip, updateSip, removeSip, addSipMsg } from '../store/actions/sip.actions'
+// import { loadSips, addSip, updateSip, removeSip, addSipMsg } from '../store/actions/sip.actions'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { sipService } from '../services/sip/'
@@ -12,16 +12,16 @@ import { SipFilter } from '../cmps/SipFilter'
 
 export function SipIndex() {
 
-    const [ filterBy, setFilterBy ] = useState(sipService.getDefaultFilter())
+    // const [ filterBy, setFilterBy ] = useState(sipService.getDefaultFilter())
     const sips = useSelector(storeState => storeState.sipModule.sips)
 
     useEffect(() => {
-        loadSips(filterBy)
+        // loadSips(filterBy)
     }, [filterBy])
 
     async function onRemoveSip(sipId) {
         try {
-            await removeSip(sipId)
+            // await removeSip(sipId)
             showSuccessMsg('Sip removed')            
         } catch (err) {
             showErrorMsg('Cannot remove sip')
@@ -32,7 +32,7 @@ export function SipIndex() {
         const sip = sipService.getEmptySip()
         sip.vendor = prompt('Vendor?', 'Some Vendor')
         try {
-            const savedSip = await addSip(sip)
+            // const savedSip = await addSip(sip)
             showSuccessMsg(`Sip added (id: ${savedSip._id})`)
         } catch (err) {
             showErrorMsg('Cannot add sip')
@@ -45,7 +45,7 @@ export function SipIndex() {
 
         const sipToSave = { ...sip, speed }
         try {
-            const savedSip = await updateSip(sipToSave)
+            // const savedSip = await updateSip(sipToSave)
             showSuccessMsg(`Sip updated, new speed: ${savedSip.speed}`)
         } catch (err) {
             showErrorMsg('Cannot update sip')

@@ -25,23 +25,21 @@ export function RootCmp() {
             <UserMsg />
 
             <main>
+            
                 <Routes>
                     <Route path="" element={<HomePage />} />
-                    <Route path="about" element={<AboutUs />}>
-                        <Route path="team" element={<AboutTeam />} />
-                        <Route path="vision" element={<AboutVision />} />
-                    </Route>
+                    <Route path="about" element={<AboutUs />} />
                     <Route path="sip" element={<SipIndex />} />
                     <Route path="sip/:sipId" element={<SipDetails />} />
                     <Route path="user/:id" element={<UserDetails />} />
+                    <Route path="user/:userId" element={<UserDetails />} />
                     <Route path="review" element={<ReviewIndex />} />
                     <Route path="chat" element={<ChatApp />} />
                     <Route path="admin" element={<AdminIndex />} />
-                    <Route path="auth" element={<LoginSignup />}>
-                    <Route path="form" element={<UserForm />} />
-                        <Route path="login" element={<Login />} />
-                        <Route path="signup" element={<Signup />} />
-                    </Route>
+                    <Route path="auth" element={<LoginSignup />} />
+                    <Route path="build" element={<UserForm />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="signup" element={<Signup />} />
                 </Routes>
             </main>
             <AppFooter />

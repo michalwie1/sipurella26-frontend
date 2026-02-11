@@ -15,28 +15,9 @@ export const sipService = {
 window.cs = sipService
 
 
-async function query(filterBy = { txt: '', minSpeed: 0 }) {
-    var sips = await storageService.query(STORAGE_KEY)
-    const { txt, minSpeed, sortField, sortDir } = filterBy
-
-    if (txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        sips = sips.filter(sip => regex.test(sip.vendor) || regex.test(sip.description))
-    }
-    if (minSpeed) {
-        sips = sips.filter(sip => sip.speed >= minSpeed)
-    }
-    if(sortField === 'vendor'){
-        sips.sort((sip1, sip2) => 
-            sip1[sortField].localeCompare(sip2[sortField]) * +sortDir)
-    }
-    if(sortField === 'speed'){
-        sips.sort((sip1, sip2) => 
-            (sip1[sortField] - sip2[sortField]) * +sortDir)
-    }
-    
-    sips = sips.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
-    return sips
+async function query() {
+    const sip = await storageService.query(STORAGE_KEY)
+    return sip
 }
 
 function getById(sipId) {
@@ -53,16 +34,37 @@ async function save(sip) {
     if (sip._id) {
         const sipToSave = {
             _id: sip._id,
-            speed: sip.speed
+            giverName: sip.giverName,
+            email: sip.email,
+            receiverName: sip.receiverName,
+            relation: sip.relation,
+            sipurellatEv: sip.sipurellatEv,
+            storyInput_q1: sip.storyInput_q1,
+            storyInput_q2: sip.storyInput_q2,
+            storyInput_q3: sip.storyInput_q3,
+            storyInput_q4: sip.storyInput_q4,
+            wish: sip.wish,
+            backCover: sip.backCover,
+            imgs: sip.imgs,
         }
         savedSip = await storageService.put(STORAGE_KEY, sipToSave)
     } else {
         const sipToSave = {
-            vendor: sip.vendor,
-            speed: sip.speed,
+            giverName: sip.giverName,
+            email: sip.email,
+            receiverName: sip.receiverName,
+            relation: sip.relation,
+            sipurellatEv: sip.sipurellatEv,
+            storyInput_q1: sip.storyInput_q1,
+            storyInput_q2: sip.storyInput_q2,
+            storyInput_q3: sip.storyInput_q3,
+            storyInput_q4: sip.storyInput_q4,
+            wish: sip.wish,
+            backCover: sip.backCover,
+            imgs: sip.imgs,
             // Later, owner is set by the backend
-            owner: userService.getLoggedinUser(),
-            msgs: []
+            // owner: userService.getLoggedinUser(),
+            // msgs: []
         }
         savedSip = await storageService.post(STORAGE_KEY, sipToSave)
     }

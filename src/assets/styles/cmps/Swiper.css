@@ -1,0 +1,25 @@
+.swiper-wrapper {
+  position: relative;
+   height: 100%; 
+   max-width: 10rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #E1306C;     
+  width: 100%;           
+  height: 2rem;       
+  top: 50%;           
+  transform: translateY(-50%); 
+}
+
+/* Increase the arrow icon itself */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  /* font-size: 30px;       */
+}
+
+
+.custom-next {
+  right: -30px;
+}

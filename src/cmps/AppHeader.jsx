@@ -26,8 +26,8 @@ export function AppHeader() {
 				</NavLink>
 				<NavLink to="about">עלינו</NavLink>
 				<NavLink to="sip">דוגמאות</NavLink>
-				<NavLink to="chat">Chat</NavLink>
-				<NavLink to="review">Review</NavLink>
+				<NavLink to="chat">יצירת קשר</NavLink>
+				{/* <NavLink to="review">Review</NavLink> */}
 
                 {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
 

@@ -1,67 +1,44 @@
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-// import { useReactMediaRecorder } from "react-media-recorder";
 
-import { useState } from 'react';
-import FormQuestions from './FormQuestions';
-// import InputText from './InputText';
-// import InputRecording from './InputRecording';
-// import RecordingToggle from './RecordingToggle';
+import { FormStep2_Questions } from './FormStep2_Questions.jsx'
 
 
-export function FormStep2 ({ next, back, data, onData }) {
-    const { register, handleSubmit } = useForm()
-    // const { t } = useTranslation('form');
-    const { sipurellatEv } = data;
+export function FormStep2 ({ onSubmit, addStepParam, back }) {
+  
+  // const { sipurellatEv } = data
+  const [questions, setQuestions] = useState(
+    [{id: 'q1', txt: "איך הכרתם?"},
+      {id: 'q2', txt: "איזה סוג של זוג אתם? מה מספרים עליכם"},
+      {id: 'q3', txt: "מה התחביבים שלכם? (ביחד ולחוד)"},
+      {id: 'q4', txt: "יש עוד משהו שהיית רוצה לשתף? שמות חיבה, בדיחות פרטיות, סיפורים מצחיקים"},
+    ]
+  )
+  const { handleSubmit, register, setValue, watch } = useForm({shouldUnregister: false})
 
-    const {
-    status,
-    startRecording,
-    stopRecording,
-    mediaBlobUrl
-  } = useReactMediaRecorder({ audio: true })
+  useEffect(() => {
+            addStepParam()
+    }, [])
 
-let [recordingToggle, setRecordingToggle] = useState(true)
-const [recording, setRecording] = useState(false);
-const [audioBlob, setAudioBlob] = useState(null);
-// const questions = t('questions', { returnObjects: true });
-
-    const onSubmit = (data) => {
-    onData(data);  
-    next();       
-  };
-
-  const onRecordingToggle = () => {
-    setRecordingToggle(!recordingToggle)
-  }
-
-
+  
 
     return (
       <section>
         <form onSubmit={handleSubmit(onSubmit)}>
         <h2>The Questions</h2>
         {
-          questions.map((question, idx) => {
+          questions.map((question) => {
             return (
-            <FormQuestions
-              key={idx}
-              register = {register}
-              question = {question} 
+            <FormStep2_Questions
+              key={question.id}
+              question = {question}
+              register={register}
+              // setValue={setValue}
+              // watch={watch}
             />)
 
           })
         }
-         {/* <div className='toggle' onClick={onRecordingToggle}>
-          {`Toggle ${recordingToggle}`}
-        </div> */}
-
-       {/* <div> */}
-        {/* <recordingToggle
-          recordingToggle = {recordingToggle}
-          onRecordingToggle = {onRecordingToggle} /> */}
-        {/* <label htmlFor="info1">what</label>
-        {recordingToggle ? <InputRecording /> : <InputText />}
-       </div> */}
 
 
     <button type="submit">המשך</button>
@@ -69,6 +46,4 @@ const [audioBlob, setAudioBlob] = useState(null);
     </section>
     )
 
-};
-
-export default FormStep2;
+}

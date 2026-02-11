@@ -1,10 +1,11 @@
 import { sipService } from '../../services/sip'
 import { store } from '../store'
-import { ADD_SIP, REMOVE_SIP, SET_SIPS, SET_SIP, UPDATE_SIP, ADD_SIP_MSG } from '../reducers/sip.reducer'
+import { ADD_SIP, REMOVE_SIP, SET_SIPS, SET_SIP, UPDATE_SIP } from '../reducers/sip.reducer'
 
-export async function loadSips(filterBy) {
+
+export async function loadSips() {
     try {
-        const sips = await sipService.query(filterBy)
+        const sips = await sipService.query()
         store.dispatch(getCmdSetSips(sips))
     } catch (err) {
         console.log('Cannot load sips', err)
@@ -14,7 +15,8 @@ export async function loadSips(filterBy) {
 
 export async function loadSip(sipId) {
     try {
-        const sip = await sipService.getById(sipId)
+        const sip = await sipService.query()
+        // const sip = await sipService.getById(sipId)
         store.dispatch(getCmdSetSip(sip))
     } catch (err) {
         console.log('Cannot load sip', err)
@@ -45,6 +47,7 @@ export async function addSip(sip) {
 }
 
 export async function updateSip(sip) {
+    console.log('sip from actions', sip)
     try {
         const savedSip = await sipService.save(sip)
         store.dispatch(getCmdUpdateSip(savedSip))
@@ -97,12 +100,12 @@ function getCmdUpdateSip(sip) {
         sip
     }
 }
-function getCmdAddSipMsg(msg) {
-    return {
-        type: ADD_SIP_MSG,
-        msg
-    }
-}
+// function getCmdAddSipMsg(msg) {
+//     return {
+//         type: ADD_SIP_MSG,
+//         msg
+//     }
+// }
 
 // unitTestActions()
 async function unitTestActions() {
