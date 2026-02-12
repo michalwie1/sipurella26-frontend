@@ -1,16 +1,23 @@
 // UserForm.jsx
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { storyService } from '../services/story.service.js'
 import { loadSip, updateSip } from '../store/actions/sip.actions';
 
+import { LOADING_START, LOADING_DONE } from '../store/reducers/system.reducer'
+
+import { Loader } from "../cmps/Loader.jsx"
+
 
 export function UserComplete () {
+const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
+const sip = useSelector(state => state.sipModule.sip)    
 const { sipId } = useParams()
-const sip = useSelector(state => state.sipModule.sip)
 // const [sip, setSip] = useState({})
+
+const dispatch = useDispatch()
 
 useEffect(() => {
     console.log(sipId)
@@ -28,18 +35,19 @@ useEffect(() => {
  async function generateIfNeeded() {
      if (!sip?._id) return
      if (sip.story) return
-     console.log('sip', sip)
-
-    console.log('sip.story', sip.story)
     try {
+    dispatch({type: LOADING_START})
+
     const story = await storyService.generate(sip)
     await updateSip({ ...sip, story })
+
+    dispatch({type: LOADING_DONE})
     } catch (err) {
     console.error("Story generation failed", err)
     }
 }
 
-if (!sip) return <div>Loading...</div>
+if (!sip || isLoading) return <Loader />
 
   return (
     <section className='user-complete'>

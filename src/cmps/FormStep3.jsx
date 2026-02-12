@@ -1,32 +1,37 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 
 import { uploadService } from "../services/upload.service"
+import { LOADING_START, LOADING_DONE } from '../store/reducers/system.reducer'
 
-
+import { Loader } from "./Loader"
 
 export function FormStep3 ({ onSubmit, addStepParam, back }) {
   const sip = useSelector(storeState => storeState.sipModule.sip)
+  const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
   const { register, handleSubmit } = useForm()
   const [images, setImages] = useState([])
 
   const [isUploading, setIsUploading] = useState(false)
   const [uploadErr, setUploadErr] = useState("")
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     addStepParam()
   }, [])
 
   const handleFiles = (files) => {
-    const fileArray = Array.from(files);
-    const validImages = fileArray.filter((file) => file.type.startsWith("image/"));
+    const fileArray = Array.from(files)
+    const validImages = fileArray.filter((file) => file.type.startsWith("image/"))
+
 
     // limit to 20 images
     const newImages = [...images, ...validImages].slice(0, 20);
-    setImages(newImages);
+    setImages(newImages)
   }
 
   const handleDrop = (ev) => {
@@ -58,18 +63,22 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
 
 
   async function onFinalSubmit(data) {
+    dispatch({type: LOADING_START})
     const imgUrls = images.length ? await uploadService.uploadImages(images) : []
     await onSubmit({ ...data, imgs: imgUrls })
 
-    navigate(`/complete/${sip._id}`)
+    dispatch({type: LOADING_DONE})
+    navigate(`/complete/`)
+    // navigate(`/complete/${sip._id}`)
   }
+
+  if (isLoading) return <Loader />
 
 
     return (
  <section className="container user-form">
       <h1>Final Step</h1>
 
-      {/* ✅ IMPORTANT: call onFinalSubmit, not onSubmit */}
       <form onSubmit={handleSubmit(onFinalSubmit)}>
         <div>
           <label htmlFor="wish">איחול</label>

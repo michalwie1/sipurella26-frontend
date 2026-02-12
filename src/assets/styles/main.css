@@ -16,6 +16,7 @@
 @import "cmps/Chat";
 @import "cmps/Logo";
 @import "cmps/Swiper";
+@import "cmps/Loader";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
