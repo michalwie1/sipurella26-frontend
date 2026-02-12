@@ -33,8 +33,8 @@ export function FormStep2 ({ onSubmit, addStepParam, back }) {
               key={question.id}
               question = {question}
               register={register}
-              // setValue={setValue}
-              // watch={watch}
+              setValue={setValue}
+              watch={watch}
             />)
 
           })

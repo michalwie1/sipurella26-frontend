@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 
 import { userService } from '../services/user'
 import { login, signup } from '../store/actions/user.actions'
-import { ImgUploader } from '../cmps/ImgUploader'
+// import { ImgUploader } from '../cmps/ImgUploader'
 
 export function LoginSignup() {
     return (
@@ -117,7 +117,7 @@ export function Signup() {
                 onChange={handleChange}
                 required
             />
-            <ImgUploader onUploaded={onUploaded} />
+            {/* <ImgUploader onUploaded={onUploaded} /> */}
             <button>Signup</button>
         </form>
     )

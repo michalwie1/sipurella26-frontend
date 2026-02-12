@@ -36,6 +36,7 @@ export function UserForm () {
     else {await updateSip({...sip, ...data,})}
 
     console.log('sip', sip)
+    console.log('step', step)
     nextStep()
   }
 

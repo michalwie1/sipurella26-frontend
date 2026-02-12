@@ -1,25 +1,30 @@
+import { httpService } from "./http.service.js"
+
 export const uploadService = {
-	uploadImg,
+  uploadAudio,
+  uploadImages,
 }
 
-async function uploadImg(ev) {
-	const CLOUD_NAME = 'vanilla-test-images'
-	const UPLOAD_PRESET = 'stavs_preset'
-	const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+// POST /api/upload/audio with field "file"
+async function uploadAudio(blob) {
+  const file = new File([blob], `audio-${Date.now()}.webm`, { type: blob.type })
+  console.log('file', file)
+  
+  const formData = new FormData()
+  formData.append("file", file)
+  
+  const res = await httpService.post("upload/audio", formData)
+  console.log('res.url', res.url)
+  // backend returns: { url }
+  return res.url
+}
 
-	const formData = new FormData()
-	
-    // Building the request body
-	formData.append('file', ev.target.files[0])
-	formData.append('upload_preset', UPLOAD_PRESET)
-	
-    // Sending a post method request to Cloudinary API
-	try {
-		const res = await fetch(UPLOAD_URL, { method: 'POST', body: formData })
-		const imgData = await res.json()
-		return imgData
-	} catch (err) {
-		console.error(err)
-		throw err
-	}
+// POST /api/upload/images with field "files" repeated
+async function uploadImages(files) {
+  const formData = new FormData()
+  files.forEach((file) => formData.append("files", file))
+
+  const res = await httpService.post("upload/images", formData)
+  // backend returns: { urls: [] }
+  return res.urls
 }

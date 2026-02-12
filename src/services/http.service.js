@@ -8,25 +8,26 @@ const BASE_URL = process.env.NODE_ENV === 'production'
 const axios = Axios.create({ withCredentials: true })
 
 export const httpService = {
-    get(endpoint, data) {
-        return ajax(endpoint, 'GET', data)
-    },
-    post(endpoint, data) {
-        return ajax(endpoint, 'POST', data)
-    },
-    put(endpoint, data) {
-        return ajax(endpoint, 'PUT', data)
-    },
-    delete(endpoint, data) {
-        return ajax(endpoint, 'DELETE', data)
-    }
+  get(endpoint, data, config) {
+    return ajax(endpoint, 'GET', data, config)
+  },
+  post(endpoint, data, config) {
+    return ajax(endpoint, 'POST', data, config)
+  },
+  put(endpoint, data, config) {
+    return ajax(endpoint, 'PUT', data, config)
+  },
+  delete(endpoint, data, config) {
+    return ajax(endpoint, 'DELETE', data, config)
+  }
 }
 
-async function ajax(endpoint, method = 'GET', data = null) {
+async function ajax(endpoint, method = 'GET', data = null, config = {}) {
+
     const url = `${BASE_URL}${endpoint}`
     const params = (method === 'GET') ? data : null
     
-    const options = { url, method, data, params }
+    const options = { url, method, data, params, ...config }
 
     try {
         const res = await axios(options)
