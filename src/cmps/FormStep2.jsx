@@ -6,7 +6,7 @@ import { FormStep2_Questions } from './FormStep2_Questions.jsx'
 
 export function FormStep2 ({ onSubmit, addStepParam, back }) {
   
-  // const { sipurellatEv } = data
+  // const { event } = data
   const [questions, setQuestions] = useState(
     [{id: 'q1', txt: "איך הכרתם?"},
       {id: 'q2', txt: "איזה סוג של זוג אתם? מה מספרים עליכם"},

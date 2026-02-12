@@ -16,6 +16,7 @@ import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
 import { UserForm } from './pages/UserForm.jsx'
+import { UserComplete } from './pages/UserComplete.jsx'
 
 
 export function RootCmp() {
@@ -38,6 +39,7 @@ export function RootCmp() {
                     <Route path="admin" element={<AdminIndex />} />
                     <Route path="auth" element={<LoginSignup />} />
                     <Route path="build" element={<UserForm />} />
+                    <Route path="complete/:sipId" element={<UserComplete />} />
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<Signup />} />
                 </Routes>

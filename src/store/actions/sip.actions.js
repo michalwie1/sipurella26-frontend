@@ -15,8 +15,7 @@ export async function loadSips() {
 
 export async function loadSip(sipId) {
     try {
-        const sip = await sipService.query()
-        // const sip = await sipService.getById(sipId)
+        const sip = await sipService.getById(sipId)
         store.dispatch(getCmdSetSip(sip))
     } catch (err) {
         console.log('Cannot load sip', err)

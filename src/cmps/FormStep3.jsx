@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useMemo } from "react"
+import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
+
 import { uploadService } from "../services/upload.service"
 
 
 
 export function FormStep3 ({ onSubmit, addStepParam, back }) {
-
+  const sip = useSelector(storeState => storeState.sipModule.sip)
   const { register, handleSubmit } = useForm()
   const [images, setImages] = useState([])
 
   const [isUploading, setIsUploading] = useState(false)
   const [uploadErr, setUploadErr] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     addStepParam()
@@ -52,27 +56,12 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     }
   }, [previews])
 
-  // async function onFinalSubmit(data) {
-  //   try {
-  //     setUploadErr("")
-  //     setIsUploading(true)
-
-  //     // 1) upload to backend (which uploads to Cloudinary)
-  //     const imgUrls = images.length ? await uploadImagesToServer(images) : []
-
-  //     // 2) save URLs into sip (imgs array)
-  //     await onSubmit({ ...data, imgs: imgUrls })
-  //   } catch (err) {
-  //     console.error(err)
-  //     setUploadErr("Upload failed. Please try again.")
-  //   } finally {
-  //     setIsUploading(false)
-  //   }
-  // }
 
   async function onFinalSubmit(data) {
     const imgUrls = images.length ? await uploadService.uploadImages(images) : []
     await onSubmit({ ...data, imgs: imgUrls })
+
+    navigate(`/complete/${sip._id}`)
   }
 
 

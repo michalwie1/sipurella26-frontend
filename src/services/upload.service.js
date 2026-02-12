@@ -8,13 +8,11 @@ export const uploadService = {
 // POST /api/upload/audio with field "file"
 async function uploadAudio(blob) {
   const file = new File([blob], `audio-${Date.now()}.webm`, { type: blob.type })
-  console.log('file', file)
   
   const formData = new FormData()
   formData.append("file", file)
   
   const res = await httpService.post("upload/audio", formData)
-  console.log('res.url', res.url)
   // backend returns: { url }
   return res.url
 }

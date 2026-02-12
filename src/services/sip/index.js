@@ -12,7 +12,7 @@ function getEmptySip() {
 		email: '',
 		receiverName: '',
 		relation: '',
-        sipurellatEv: '',
+        event: '',
         storyInput: [],
         wish: '',
         backCover: '',

@@ -39,8 +39,8 @@ export function FormStep1 ({ onSubmit, addStepParam }) {
       </div>
 
       <div>
-        <label htmlFor="sipurellatEv"></label>
-        <select id="sipurellatEv"  {...register("sipurellatEv")} name="sipurellatEv">
+        <label htmlFor="event"></label>
+        <select id="event"  {...register("event")} name="event">
           
           <option value="" style={{display:"none"}}>איזה אירוע?</option>
           <option value="ev1">יום הולדת</option>
