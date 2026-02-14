@@ -13,7 +13,13 @@ function getEmptySip() {
 		receiverName: '',
 		relation: '',
         event: '',
-        storyInput: [],
+        story: '',
+        details: [
+			{ text: "", recordUrl: "" }, // q1
+			{ text: "", recordUrl: "" }, // q2
+			{ text: "", recordUrl: "" }, // q3
+			{ text: "", recordUrl: "" }, // q4
+		],
         wish: '',
         backCover: '',
         imgs: []

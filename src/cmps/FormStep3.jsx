@@ -68,8 +68,8 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     await onSubmit({ ...data, imgs: imgUrls })
 
     dispatch({type: LOADING_DONE})
-    navigate(`/complete/`)
-    // navigate(`/complete/${sip._id}`)
+    // navigate(`/complete/`)
+    navigate(`/complete/${sip._id}`)
   }
 
   if (isLoading) return <Loader />

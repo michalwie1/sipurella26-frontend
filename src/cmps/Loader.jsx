@@ -1,7 +1,7 @@
 // import { useState, useEffect } from 'react'
 
 
-export function Loader() {
+export function Loader({ text = '' }) {
 
     // const [showTxt, setShowTxt] = useState(false)
 
@@ -14,6 +14,7 @@ export function Loader() {
 
     return (
         <div className="loader-container">
+            {text && <h2>{text}</h2>}
            
              <div className="loader"></div>
         </div>

@@ -15,31 +15,27 @@ export function UserComplete () {
 const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
 const sip = useSelector(state => state.sipModule.sip)    
 const { sipId } = useParams()
-// const [sip, setSip] = useState({})
 
 const dispatch = useDispatch()
 
 useEffect(() => {
     console.log(sipId)
     if (!sip || sip._id !== sipId) {
-        // const loadedSip = await sipService.getById(sipId)
         loadSip(sipId)
     }
 }, [sipId])
 
 useEffect(() => {
-    console.log(sip)
-    generateIfNeeded()
+    generateStory()
 }, [sip])
 
- async function generateIfNeeded() {
+ async function generateStory() {
      if (!sip?._id) return
      if (sip.story) return
     try {
     dispatch({type: LOADING_START})
 
     const story = await storyService.generate(sip)
-    await updateSip({ ...sip, story })
 
     dispatch({type: LOADING_DONE})
     } catch (err) {
@@ -47,7 +43,7 @@ useEffect(() => {
     }
 }
 
-if (!sip || isLoading) return <Loader />
+if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (
     <section className='user-complete'>

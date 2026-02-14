@@ -4,10 +4,12 @@ import { uploadService } from "../services/upload.service"
 
 
 
-export function FormStep2_Questions ({ question, register, setValue, watch }) {
+export function FormStep2_Questions ({ question, register, setValue, idx }) {
   // const {status, startRecording, stopRecording, mediaBlobUrl} = useReactMediaRecorder({ audio: true })
   const [recordingToggle, setRecordingToggle] = useState(true)
-  const fileName = `storyInput_${question.id}`
+
+  const textPath = `details.${idx}.text`
+  const recordPath = `details.${idx}.recordUrl`
 
   const onRecordingToggle = () => {
     setRecordingToggle(!recordingToggle)
@@ -18,19 +20,24 @@ export function FormStep2_Questions ({ question, register, setValue, watch }) {
     onStop: async (_blobUrl, blob) => {
       try {
         const url = await uploadService.uploadAudio(blob)
-        setValue(fileName, url, { shouldDirty: true })
+        setValue(recordPath, url, { shouldDirty: true })
+        setValue(textPath, "", { shouldDirty: true }) //optional
       } catch (err) {
         console.error(err)
       }
     },
   })
 
+
   return (
     <section>
-      <label htmlFor="info1">{question.txt}</label>
+      <label htmlFor="info1">{question}</label>
       <div className='toggle'>
         <button type="button" onClick={onRecordingToggle}>{`Toggle ${recordingToggle}`}</button>
       </div>
+
+      {/* Ensure recordUrl is part of the form submit even if UI is toggled */}
+      <input type="hidden" {...register(recordPath)} />
 
       
     {recordingToggle 
@@ -44,10 +51,10 @@ export function FormStep2_Questions ({ question, register, setValue, watch }) {
         )}
       </div>
     : <div>
-      <label htmlFor={fileName}>ספר לנו</label>
+      <label htmlFor={textPath}>ספר לנו</label>
       <textarea
-        id={fileName}
-        {...register(fileName)}
+        id={textPath}
+        {...register(textPath)}
         rows="6"
         placeholder="כאן מספרים"
         // value=""
