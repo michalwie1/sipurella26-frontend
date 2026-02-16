@@ -72,8 +72,8 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     navigate(`/complete/${sip._id}`)
   }
 
-  if (isLoading) return <Loader />
-
+  
+// if (isLoading) return <Loader />
 
     return (
  <section className="container user-form">
@@ -112,7 +112,10 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
             />
           </label>
 
-          <div className="preview-grid">
+          {isLoading 
+          ? <Loader />
+
+          : <div className="preview-grid">
             {previews.map((p, idx) => (
               <div key={p.url} className="preview-item">
                 <img src={p.url} alt={`preview-${idx}`} className="preview-img" />
@@ -121,7 +124,7 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
                 </button>
               </div>
             ))}
-          </div>
+          </div>}
 
           {images.length >= 20 && <p className="limit-msg">You can upload up to 20 images only.</p>}
         </section>

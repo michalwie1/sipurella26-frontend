@@ -44,13 +44,13 @@ export function FormStep1 ({ onSubmit, addStepParam }) {
           
           <option value="" style={{display:"none"}}>איזה אירוע?</option>
           <option value="ev1">יום הולדת</option>
-          <option value="ev1">חתונה</option>
-          <option value="ev1">אירוסין</option>
-          <option value="ev1">בר/בת מצווה</option>
-          <option value="ev1">יום נישואין</option>
-          <option value="ev1">הריון</option>
-          <option value="ev1">לידה</option>
-          <option value="ev1">אחר</option>
+          <option value="ev2">חתונה</option>
+          <option value="ev3">אירוסין</option>
+          <option value="ev4">בר/בת מצווה</option>
+          <option value="ev5">יום נישואין</option>
+          <option value="ev6">הריון</option>
+          <option value="ev7">לידה</option>
+          <option value="ev8">אחר</option>
       </select>
       </div>
 
