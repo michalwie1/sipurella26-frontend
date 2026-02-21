@@ -44,25 +44,6 @@ export function ImgUploader({ images = [], setImages, inputId, multiple = true, 
         }
       }, [previews])
   
-// const [imgData, setImgData] = useState({
-//     imgUrl: null,
-//     height: 500,
-//     width: 500,
-//   })
-//   const [isUploading, setIsUploading] = useState(false)
-
-//   async function uploadImg(ev) {
-//     setIsUploading(true)
-//     const { secure_url, height, width } = await uploadService.uploadImg(ev)
-//     setImgData({ imgUrl: secure_url, width, height })
-//     setIsUploading(false)
-//     onUploaded && onUploaded(secure_url)
-//   }
-
-//   function getUploadLabel() {
-//     if (imgData.imgUrl) return 'Upload Another?'
-//     return isUploading ? 'Uploading....' : 'Upload Image'
-//   }
 
 
   return (
@@ -84,7 +65,6 @@ export function ImgUploader({ images = [], setImages, inputId, multiple = true, 
           </label>
 
           
-
           <div className="preview-grid">
             {previews.map((p, idx) => (
               <div key={p.url} className="preview-item">
@@ -99,11 +79,5 @@ export function ImgUploader({ images = [], setImages, inputId, multiple = true, 
           {images.length >= 20 && <p className="limit-msg">You can upload up to 20 images only.</p>}
           {uploadErr && <p style={{ color: "red" }}>{uploadErr}</p>}
         </section>
-
-    // <div className="upload-preview">
-    //   {imgData.imgUrl && <img src={imgData.imgUrl} style={{ maxWidth: '200px', float: 'right' }} />}
-    //   <label htmlFor="imgUpload">{getUploadLabel()}</label>
-    //   <input type="file" onChange={uploadImg} accept="img/*" id="imgUpload" />
-    // </div>
   )
 }

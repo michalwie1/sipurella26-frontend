@@ -107,6 +107,9 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
           />
         </div>
 
+        {isLoading 
+          ? <Loader />
+          : <>
         {watch("characters")?.map((char, idx) => (
           <div key={char.id}>
             <h2>Character {idx + 1}</h2>
@@ -125,6 +128,8 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
             />
           </div>
         ))}
+        </>
+        }
          {/* <ImgUploader images={characterImg} setImages={setCharacterImg}/> */}
 
         {isLoading 
