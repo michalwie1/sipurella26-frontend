@@ -24,7 +24,7 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     id: `c${i + 1}`,
     role: "main",
     name: "",
-    refImg: "",
+    uploadedImg: "",
     appearance: null,
   }))
   
@@ -60,15 +60,15 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     const generalImgUrls = generalImgs.length ? await uploadService.uploadImages(generalImgs) : []
     const updatedCharacters = await Promise.all(
     data.characters.map(async (char, idx) => {
-      let refImgUrl = ""
+      let uploadedImgUrl = ""
       const file = characterImgs[idx]
 
       if (file) {
         const uploaded = await uploadService.uploadImages([file]) // wrap in array
-        refImgUrl = uploaded[0] || ""
+        uploadedImgUrl = uploaded[0] || ""
       }
 
-      return {...char, refImg: refImgUrl}
+      return {...char, uploadedImg: uploadedImgUrl}
     })
   )
 

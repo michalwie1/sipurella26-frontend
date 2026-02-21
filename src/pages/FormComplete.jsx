@@ -53,27 +53,28 @@ useEffect(() => {
 if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (
-    <section className='user-complete'>
-        <h1>הסיפור שלך מוכן</h1>
-        {/* <pre>{sip.story}</pre> */}
-       <div>
-        {Array.isArray(sip.story) &&
+    <section className='form-complete'>
+       <div className='story-generate'>
+        <h1>הסיפור של {sip.receiverName}</h1>
+        <pre>Front Cover</pre>
+        <hr></hr>
+        {Array.isArray(sip.story) &&          
             sip.story.map((paragraph, idx) => (
             <pre key={idx} className="paragraph">
                 {paragraph}
                 <hr></hr>
             </pre>
-            ))}
+            ))
+           }
+        <pre>{sip.backCover}</pre>
+        <hr></hr>
         </div>
 
-        {isStoryReady ? (
-            <ImagePrompts sipId={sip._id} />
-            ) : (
-            <Loader text="בונים את הסיפורלה שלך..." />
-            )}
+        {isStoryReady 
+            ? <ImagePrompts sipId={sip._id} />
+            : <Loader text="בונים את הסיפורלה שלך..." />
+        }
 
-
-        {/* <ImagePrompts/> */}
     </section>
   )
 }

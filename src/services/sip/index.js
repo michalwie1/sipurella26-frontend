@@ -22,7 +22,7 @@ function getEmptySip() {
 			{ text: '', recordUrl: '' }, // q4
 		],
 		characters: [
-			{ id: "c1", role: "main", name: "", refImg: [], appearance: null }
+			{ id: "c1", role: "main", name: "", uploadedImg: [], appearance: null }
 		],
         wish: '',
         backCover: '',
