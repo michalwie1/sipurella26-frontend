@@ -57,14 +57,14 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
     dispatch({type: LOADING_START})
     
     // upload images to cloudinary and add to sip.images & characters
-    const generalImgUrls = generalImgs.length ? await uploadService.uploadImages(generalImgs) : []
+    const generalImgUrls = generalImgs.length ? await uploadService.uploadImages(generalImgs, sip._id) : []
     const updatedCharacters = await Promise.all(
     data.characters.map(async (char, idx) => {
       let uploadedImgUrl = ""
       const file = characterImgs[idx]
 
       if (file) {
-        const uploaded = await uploadService.uploadImages([file]) // wrap in array
+        const uploaded = await uploadService.uploadImages([file, sip._id]) // wrap in array
         uploadedImgUrl = uploaded[0] || ""
       }
 

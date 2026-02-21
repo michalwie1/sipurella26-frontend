@@ -18,9 +18,10 @@ async function uploadAudio(blob) {
 }
 
 // POST /api/upload/images with field "files" repeated
-async function uploadImages(files) {
+async function uploadImages(files, sipId) {
   const formData = new FormData()
   files.forEach((file) => formData.append("files", file))
+  formData.append("sipId", sipId)
 
   const res = await httpService.post("upload/images", formData)
   // backend returns: { urls: [] }
