@@ -10,8 +10,6 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
   const [isLoading, setIsLoading] = useState(false)
   const [errMsg, setErrMsg] = useState("")
 
- 
-
   useEffect(() => {
     if (!sipId) return
     let cancelled = false
@@ -47,26 +45,26 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
     await copyToClipboard(prompts.join("\n\n---\n\n"))
   }
 
-  async function onRegenerate() {
-    try {
-      setIsLoading(true)
-      setErrMsg("")
+  // async function onRegenerate() {
+  //   try {
+  //     setIsLoading(true)
+  //     setErrMsg("")
 
-      // only works if backend supports force (optional)
-      const res = await imagesService.generatePrompts(sipId, { force: true })
+  //     // only works if backend supports force (optional)
+  //     const res = await imagesService.generatePrompts(sipId, { force: true })
 
-      if (!Array.isArray(res?.prompts)) {
-        throw new Error("Invalid response (expected { prompts: [] })")
-      }
+  //     if (!Array.isArray(res?.prompts)) {
+  //       throw new Error("Invalid response (expected { prompts: [] })")
+  //     }
 
-      setPrompts(res.prompts)
-    } catch (err) {
-      console.error(err)
-      setErrMsg("Failed to regenerate prompts.")
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  //     setPrompts(res.prompts)
+  //   } catch (err) {
+  //     console.error(err)
+  //     setErrMsg("Failed to regenerate prompts.")
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   function handlePromptChange(idx, newValue) {
     setPrompts(prev => {
@@ -76,13 +74,29 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
     })
   }
 
+  async function onSavePrompts() {
+  try {
+    setIsLoading(true)
+    setErrMsg("")
+    // you need an endpoint that updates sip.prompts
+    await imagesService.savePrompts(sipId, prompts)
+  } catch (err) {
+    console.error(err)
+    setErrMsg("Failed to save prompts.")
+  } finally {
+    setIsLoading(false)
+  }
+}
+
   if (!sipId) return <div>Missing sipId</div>
   if (isLoading) return <Loader text="Generating prompts..." />
 
   if (errMsg) {
     return (
       <section className="image-prompts">
-        <h2>Midjourney Prompts</h2>
+        <header>
+        <h1>Midjourney Prompts</h1>
+        </header>
         <p style={{ color: "crimson" }}>{errMsg}</p>
         <button onClick={() => imagesService.generatePrompts(sipId).then(r => setPrompts(r.prompts)).catch(console.error)}>
           Try again
@@ -94,15 +108,22 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
 
   return (
    <section className="image-prompts">
-        <h1>Midjourney Prompts</h1>
+         <header>
+          <h1>Midjourney Prompts</h1>
+          {/* Save prompts */}
+          <button type="button" onClick={onSavePrompts} disabled={!prompts.length}>
+            Save prompts
+          </button>
 
-        {/* <button type="button" onClick={onRegenerate} disabled={!sipId}>
-          Regenerate
-        </button>
+          {/* <button type="button" onClick={onRegenerate} disabled={!sipId}>
+            Regenerate
+          </button>
 
-        <button type="button" onClick={onCopyAll} disabled={!prompts.length}>
-          Copy all
-        </button> */}
+          <button type="button" onClick={onCopyAll} disabled={!prompts.length}>
+            Copy all
+          </button> */}
+        </header>
+
       
           {prompts.length && prompts.map((prompt, idx) => (
             <CardPreview

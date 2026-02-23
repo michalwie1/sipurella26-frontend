@@ -1,4 +1,16 @@
 .form-complete {
     display: flex;
 
+    header{
+        display: flex;
+        height: 4rem;
+    }
+
+    .story-generate {
+
+        button{
+            height: 2rem;
+        }
+    }
 }
+    

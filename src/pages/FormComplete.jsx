@@ -43,6 +43,16 @@ useEffect(() => {
     setStoryDraft(Array.isArray(sip?.story) ? sip.story : [])
 }, [sip?._id, sip?.story])
 
+useEffect(() => {
+  if (!sip?._id) return
+  if (!Array.isArray(sip.story)) return
+
+  // initialize draft ONLY if empty
+  setStoryDraft(prev =>
+    prev.length === 0 ? sip.story : prev
+  )
+}, [sip?._id])
+
 
  async function generateStory() {
     if (!sip?._id) return
@@ -82,13 +92,71 @@ async function copyToClipboard(text) {
     }
   }
 
+function downloadTextFile(filename, text) {
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" })
+  const url = URL.createObjectURL(blob)
+
+  const a = document.createElement("a")
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+
+  URL.revokeObjectURL(url)
+}
+
+function buildStoryText(sip) {
+  const story = Array.isArray(sip.story) ? sip.story : []
+  // const front = sip.receiverName ? `${sip.receiverName} - כריכה קדמית\n` : ""
+  // const back = sip.backCover ? `\n\n${sip.backCover} - כריכה אחורית\n` : ""
+
+  const body = story
+    .join("\n\n") // separator between paragraphs
+
+  // return `${front}\n${body}${back}`.trim()
+  return body.trim()
+}
+
+async function onSaveStory() {
+  try {
+    dispatch({ type: LOADING_START })
+    updateSip({...sip, story: storyDraft} )
+    // const updated = await sipService.update(sip._id, { story: storyDraft })
+    // dispatch({ type: SET_SIP, sip: updated })
+  } catch (err) {
+    console.error("Failed to save story", err)
+  } finally {
+    dispatch({ type: LOADING_DONE })
+  }
+}
+
 
 if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (
     <section className='form-complete'>
        <div className='story-generate'>
+        <header>
         <h1>{sip.receiverName}</h1>
+
+        <button
+          type="button"
+          disabled={!Array.isArray(sip.story) || !sip.story.length}
+          onClick={() => {
+            const text = buildStoryText(sip)
+            const safeName = (sip.receiverName || "sip").replace(/[^\w\u0590-\u05FF\- ]+/g, "").trim()
+            downloadTextFile(`${safeName || "sip"}-story.txt`, text)
+          }}
+        >Download as a txt
+      </button>
+
+      {/* Save story */}
+      <button type="button" onClick={onSaveStory} disabled={!storyDraft.length}>
+        Save story
+      </button>
+      </header>
+
         <CardPreview
                 idx={0}
                 label={labels[0]}
@@ -101,8 +169,8 @@ if (!sip || isLoading) return <Loader text="בונים את הסיפורלה ש�
 
             <CardPreview
                 key={idx}
-                idx={idx + 1}
-                label={labels[idx + 1] || `Story ${idx + 1}`}
+                idx={idx}
+                label={labels[idx + 1]}
                 text={paragraph}
                 onCopy={copyToClipboard}
                 onChange={handleParagraphChange}
