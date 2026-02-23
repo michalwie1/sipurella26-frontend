@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ import { LOADING_START, LOADING_DONE } from '../store/reducers/system.reducer.js
 import { SET_SIP } from '../store/reducers/sip.reducer.js'
 
 import { Loader } from "../cmps/Loader.jsx"
+import { CardPreview } from "../cmps/CardPreview.jsx"
 import { ImagePrompts } from "../cmps/ImagePrompts.jsx"
 
 
@@ -17,12 +18,21 @@ const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
 const sip = useSelector(state => state.sipModule.sip)    
 const { sipId } = useParams()
 const isStoryReady = Array.isArray(sip?.story) && sip.story.length >= 10;
+const [storyDraft, setStoryDraft] = useState([])
 
 
 const dispatch = useDispatch()
 
+ const labels = useMemo(() => {
+    const arr = []
+    arr.push("Front Cover")
+    for (let i = 1; i <= 10; i++) arr.push(`Paragraph ${i}`)
+    arr.push("Wish")
+    arr.push("Back cover")
+    return arr
+  }, [])
+
 useEffect(() => {
-    console.log(sipId)
     if (!sip || sip._id !== sipId) {
         loadSip(sipId)
     }
@@ -30,6 +40,7 @@ useEffect(() => {
 
 useEffect(() => {
     generateStory()
+    setStoryDraft(Array.isArray(sip?.story) ? sip.story : [])
 }, [sip?._id, sip?.story])
 
 
@@ -49,29 +60,67 @@ useEffect(() => {
     }
 }
 
+function handleParagraphChange(idx, newValue) {
+    setStoryDraft((prev) => {
+      const next = [...prev]
+      next[idx] = newValue
+      return next
+    })
+  }
+
+async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch (err) {
+      console.error("Clipboard copy failed:", err)
+      const ta = document.createElement("textarea")
+      ta.value = text
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand("copy")
+      document.body.removeChild(ta)
+    }
+  }
+
 
 if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (
     <section className='form-complete'>
        <div className='story-generate'>
-        <h1>הסיפור של {sip.receiverName}</h1>
-        <pre>Front Cover</pre>
-        <hr></hr>
+        <h1>{sip.receiverName}</h1>
+        <CardPreview
+                idx={0}
+                label={labels[0]}
+                text={`הסיפור של ${sip.receiverName}`}
+                onCopy={copyToClipboard}
+                onChange={handleParagraphChange}
+        />
         {Array.isArray(sip.story) &&          
-            sip.story.map((paragraph, idx) => (
-            <pre key={idx} className="paragraph">
-                {paragraph}
-                <hr></hr>
-            </pre>
+            storyDraft.map((paragraph, idx) => (
+
+            <CardPreview
+                key={idx}
+                idx={idx + 1}
+                label={labels[idx + 1] || `Story ${idx + 1}`}
+                text={paragraph}
+                onCopy={copyToClipboard}
+                onChange={handleParagraphChange}
+            />
             ))
            }
-        <pre>{sip.backCover}</pre>
-        <hr></hr>
+
+           <CardPreview
+                idx={12}
+                label={labels[12]}
+                text={sip.backCover}
+                onCopy={copyToClipboard}
+                onChange={handleParagraphChange}
+        />
         </div>
 
         {isStoryReady 
-            ? <ImagePrompts sipId={sip._id} />
+            ? <ImagePrompts sipId={sip._id} copyToClipboard={copyToClipboard} labels={labels}/>
             : <Loader text="בונים את הסיפורלה שלך..." />
         }
 

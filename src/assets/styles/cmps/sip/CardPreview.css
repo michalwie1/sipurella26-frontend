@@ -1,0 +1,44 @@
+.card-preview {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 12px;
+    background: white;
+    height: 20rem;
+    
+    font-size: 1rem;
+    align-content: center;
+    justify-self: center;
+    font-weight: bold;
+    margin: 1rem;
+
+    .card-wrapper{
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .label{
+            display: flex; 
+            gap: 10px; 
+            align-items: baseline;
+        }
+
+        .label span {
+            opacity: 0.6;
+        }
+    }
+
+    textarea{
+        width: 100%;
+        resize: vertical;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-family: monospace;
+        font-size: 13px;
+        line-height: 1.35;
+        height: 15rem;
+        width: 25rem;
+    }
+}

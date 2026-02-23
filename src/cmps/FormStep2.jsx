@@ -11,17 +11,6 @@ export function FormStep2 ({ onSubmit, addStepParam, back }) {
   const [questions, setQuestions] = useState(
     ["איך הכרתם?", "איזה סוג של זוג אתם? מה מספרים עליכם", "מה התחביבים שלכם? (ביחד ולחוד)", "יש עוד משהו שהיית רוצה לשתף? שמות חיבה, בדיחות פרטיות, סיפורים מצחיקים"])
 
-  // const defaultValues = {
-  //   details: [
-  //     { text: "", recordUrl: "" },
-  //     { text: "", recordUrl: "" },
-  //     { text: "", recordUrl: "" },
-  //     { text: "", recordUrl: "" },
-  //   ],
-  // }
-  // const { handleSubmit, register, setValue } = useForm({shouldUnregister: false, defaultValues})
-
-
   const defaultValues = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || {
     details: [
       { text: "", recordUrl: "" },
