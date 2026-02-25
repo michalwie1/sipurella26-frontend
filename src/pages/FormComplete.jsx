@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { storyService } from '../services/story.service.js'
+import { imagesService } from '../services/images.service.js'
 import { loadSip, updateSip } from '../store/actions/sip.actions.js';
 
 import { LOADING_START, LOADING_DONE } from '../store/reducers/system.reducer.js'
@@ -132,10 +133,16 @@ async function onSaveStory() {
 }
 
 
+
+
+
+
 if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (
     <section className='form-complete'>
+
+      {/* <button onClick={onClickTest}>Test</button> */}
        <div className='story-generate'>
         <header>
         <h1>{sip.receiverName}</h1>
@@ -188,7 +195,10 @@ if (!sip || isLoading) return <Loader text="בונים את הסיפורלה ש�
         </div>
 
         {isStoryReady 
-            ? <ImagePrompts sipId={sip._id} copyToClipboard={copyToClipboard} labels={labels}/>
+            ? <>
+                <ImagePrompts sipId={sip._id} copyToClipboard={copyToClipboard} labels={labels} isMidjourney={true}/>
+                <ImagePrompts sipId={sip._id} copyToClipboard={copyToClipboard} labels={labels} isMidjourney={false}/>
+              </>
             : <Loader text="בונים את הסיפורלה שלך..." />
         }
 

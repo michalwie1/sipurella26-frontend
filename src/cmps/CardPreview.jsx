@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export function CardPreview({ idx, label, text, onCopy, onChange }) {
+export function CardPreview({ idx, label, text, onCopy, onChange, isRecraft = false, onGenerateRecraft={} }) {
   const [copied, setCopied] = useState(false)
 
   async function handleCopy() {
@@ -26,6 +26,15 @@ export function CardPreview({ idx, label, text, onCopy, onChange }) {
         <button type="button" onClick={handleCopy}>
           {copied ? "Copied ✓" : "Copy"}
         </button>
+
+        {isRecraft && 
+            <button type="button" onClick={() => onGenerateRecraft(idx)}>
+              generate prompt
+            </button>}
+          
+          {/* {!recraftLink && 
+          <a href={recraftLink}>Link to img</a>
+          } */}
       </div>
 
       <textarea

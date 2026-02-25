@@ -2,24 +2,28 @@ import { useEffect, useMemo, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 
 import { imagesService } from "../services/images.service"
+import { loadSip, updateSip } from '../store/actions/sip.actions.js';
 import { Loader } from "../cmps/Loader"
 import { CardPreview } from "../cmps/CardPreview"
 
-export function ImagePrompts({ sipId, copyToClipboard, labels }) {
+export function ImagePrompts({ sipId, copyToClipboard, labels, isMidjourney }) {
+  const sip = useSelector(state => state.sipModule.sip)
   const [prompts, setPrompts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [errMsg, setErrMsg] = useState("")
+  // const [recraftLink, setRecraftLink] = useState(null)
 
   useEffect(() => {
     if (!sipId) return
-    let cancelled = false
+    loadSip(sipId)
+    let cancelled = false;
 
-    ;(async () => {
+    (async () => {
       try {
         setIsLoading(true)
         setErrMsg("")
 
-        const res = await imagesService.generatePrompts(sipId)
+        const res = await imagesService.generatePrompts(sipId, isMidjourney)
 
         if (!Array.isArray(res?.prompts)) {
           throw new Error("Invalid response (expected { prompts: [] })")
@@ -40,32 +44,6 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
   }, [sipId])
 
 
-
-  async function onCopyAll() {
-    await copyToClipboard(prompts.join("\n\n---\n\n"))
-  }
-
-  // async function onRegenerate() {
-  //   try {
-  //     setIsLoading(true)
-  //     setErrMsg("")
-
-  //     // only works if backend supports force (optional)
-  //     const res = await imagesService.generatePrompts(sipId, { force: true })
-
-  //     if (!Array.isArray(res?.prompts)) {
-  //       throw new Error("Invalid response (expected { prompts: [] })")
-  //     }
-
-  //     setPrompts(res.prompts)
-  //   } catch (err) {
-  //     console.error(err)
-  //     setErrMsg("Failed to regenerate prompts.")
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
   function handlePromptChange(idx, newValue) {
     setPrompts(prev => {
       const next = [...prev]
@@ -79,12 +57,24 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
     setIsLoading(true)
     setErrMsg("")
     // you need an endpoint that updates sip.prompts
-    await imagesService.savePrompts(sipId, prompts)
+    isMidjourney ? updateSip({...sip, promptsMj: prompts}) : updateSip({...sip, promptsRc: prompts}) 
   } catch (err) {
     console.error(err)
     setErrMsg("Failed to save prompts.")
   } finally {
     setIsLoading(false)
+  }
+}
+
+async function onGenerateRecraft(promptIdx){
+  console.log('generating....')
+  try{
+    const res = await imagesService.generateImages(sipId, promptIdx)
+    // setRecraftLink(res)
+    console.log(res)
+
+  } catch (err) {
+    console.log('error', err)
   }
 }
 
@@ -95,7 +85,7 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
     return (
       <section className="image-prompts">
         <header>
-        <h1>Midjourney Prompts</h1>
+        <h1>{`${isMidjourney ? 'Midjourney' : 'Recraft'} Prompts `}</h1>
         </header>
         <p style={{ color: "crimson" }}>{errMsg}</p>
         <button onClick={() => imagesService.generatePrompts(sipId).then(r => setPrompts(r.prompts)).catch(console.error)}>
@@ -109,19 +99,13 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
   return (
    <section className="image-prompts">
          <header>
-          <h1>Midjourney Prompts</h1>
+          <h1>{isMidjourney ? 'Midjourney' : 'Recraft'}</h1>
           {/* Save prompts */}
           <button type="button" onClick={onSavePrompts} disabled={!prompts.length}>
             Save prompts
           </button>
+          <a href={isMidjourney ? "https://discord.com/channels/1335254665784201227/1476258095226163280" : "https://www.recraft.ai/project/a4784568-db0e-4033-956c-9b8996414149"}>Link</a>
 
-          {/* <button type="button" onClick={onRegenerate} disabled={!sipId}>
-            Regenerate
-          </button>
-
-          <button type="button" onClick={onCopyAll} disabled={!prompts.length}>
-            Copy all
-          </button> */}
         </header>
 
       
@@ -133,6 +117,9 @@ export function ImagePrompts({ sipId, copyToClipboard, labels }) {
               text={prompt}
               onCopy={copyToClipboard}
               onChange={handlePromptChange}
+              isRecraft={!isMidjourney}
+              onGenerateRecraft= {onGenerateRecraft}
+              // recraftLink = {recraftLink}
             />
           ))}
      

@@ -2,23 +2,20 @@ import { useReactMediaRecorder } from "react-media-recorder"
 import { useState } from 'react'
 import { uploadService } from "../services/upload.service"
 
-
-
 export function FormStep2_Questions ({ question, register, setValue, idx }) {
-  // const {status, startRecording, stopRecording, mediaBlobUrl} = useReactMediaRecorder({ audio: true })
   const [recordingToggle, setRecordingToggle] = useState(true)
+  const [previewUrl, setPreviewUrl] = useState("")
 
   const textPath = `details.${idx}.text`
   const recordPath = `details.${idx}.recordUrl`
 
-  const onRecordingToggle = () => {
-    setRecordingToggle(!recordingToggle)
-  }
+  const onRecordingToggle = () => {setRecordingToggle(!recordingToggle)}
 
-   const { startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({
+   const { startRecording, stopRecording } = useReactMediaRecorder({
     audio: true,
-    onStop: async (_blobUrl, blob) => {
+    onStop: async (blobUrl, blob) => {
       try {
+        setPreviewUrl(blobUrl)
         const url = await uploadService.uploadAudio(blob)
         setValue(recordPath, url, { shouldDirty: true })
         setValue(textPath, "", { shouldDirty: true }) //optional
@@ -28,6 +25,15 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
     },
   })
 
+    async function onDeleteRecording() {
+    try {
+      setValue(recordPath, "", { shouldDirty: true }) 
+      setPreviewUrl("")
+    } catch (err) {
+      console.error("Failed to delete recording", err)
+    }
+  }
+
 
   return (
     <section>
@@ -36,18 +42,21 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
         <button type="button" onClick={onRecordingToggle}>{`Toggle ${recordingToggle}`}</button>
       </div>
 
-      {/* Ensure recordUrl is part of the form submit even if UI is toggled */}
       <input type="hidden" {...register(recordPath)} />
 
       
     {recordingToggle 
     ? <div>
-        {/* <p>Status: {status}</p> */}
         <button type="button" onClick={startRecording}>Start</button>
         <button type="button" onClick={stopRecording}>Stop</button>
 
-        {mediaBlobUrl && (
-          <audio src={mediaBlobUrl} controls />
+        {previewUrl && (
+          <>
+          <audio src={previewUrl} controls />
+          <button type="button" onClick={onDeleteRecording}>
+                x
+          </button>
+          </>
         )}
       </div>
     : <div>
@@ -57,7 +66,6 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
         {...register(textPath)}
         rows="6"
         placeholder="כאן מספרים"
-        // value=""
       />
       </div>
     }

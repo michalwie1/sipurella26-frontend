@@ -35,8 +35,6 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
 }
   const { register, handleSubmit, setValue, watch } = useForm({defaultValues})
 
-    // const { handleSubmit, register, setValue } = useForm({shouldUnregister: false, defaultValues})
-
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -128,14 +126,8 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
             />
           </div>
         ))}
-        </>
-        }
-         {/* <ImgUploader images={characterImg} setImages={setCharacterImg}/> */}
 
-        {isLoading 
-          ? <Loader />
-          : <>
-            <h2>Images</h2>
+         <h2>Images</h2>
             <ImgUploader
               images={generalImgs}
               setImages={setGeneralImgs}
@@ -143,7 +135,7 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
               multiple={true}
               limit={20}
             />
-          </>
+        </>
         }
 
         
