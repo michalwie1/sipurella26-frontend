@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router'
 
 import { uploadService } from "../services/upload.service"
 import { LOADING_START, LOADING_DONE } from '../store/reducers/system.reducer'
+import { clearSipDraft } from '../services/util.service'
 
 import { Loader } from "./Loader"
 import { ImgUploader } from "./ImgUploader"
@@ -72,10 +73,7 @@ export function FormStep3 ({ onSubmit, addStepParam, back }) {
 
     await onSubmit({ ...data, imgs: generalImgUrls, characters: updatedCharacters })
 
-    localStorage.removeItem("form_step")
-    localStorage.removeItem("form_step1")
-    localStorage.removeItem("form_step2")
-    localStorage.removeItem("form_step3")
+    clearSipDraft()
     
     dispatch({type: LOADING_DONE})
     // navigate(`/complete/`)

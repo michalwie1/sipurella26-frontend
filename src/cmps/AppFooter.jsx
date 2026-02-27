@@ -11,7 +11,7 @@ export function AppFooter() {
 
 	return (
 		<footer className="app-footer full">
-			<p>סיפורלה 2026 &copy;</p>
+			<p>&copy; סיפורלה 2026</p>
 			<a href="https://www.instagram.com/sipurella">
 				<FontAwesomeIcon icon={faInstagram} />
 			</a>

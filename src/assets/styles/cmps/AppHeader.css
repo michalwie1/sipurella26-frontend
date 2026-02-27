@@ -2,8 +2,8 @@
     display: flex;
     min-height: 3.5rem;
 
-    background-color: var(--clr-white);
     padding: .8rem 1rem;
+    
     
     & nav {
         display: flex;
@@ -11,16 +11,19 @@
         align-items: center;
         gap: 1em;
         
-        font-size: .8em;
+        /* font-size: .8em; */
+        font-size: 1.1rem;
+        letter-spacing: 5px;
 
         .active {
-            color: var(--clr1);
+            color: var(--clr-white);
         }
 
         .logo {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-inline-end: 2em;
+            /* font-size: 2rem; */
+            width: 4rem;
+
+            /* margin-inline-end: 2em; */
         }
 
         .login-link {
@@ -38,15 +41,6 @@
         margin-inline-start: auto;
 
         color: var(--clr1);
-
-        .score {
-            padding: 8px;
-            background-color: var(--clr2);
-            border-radius: 50%;
-            margin: 10px;
-
-            color: var(--gray1);
-        }
 
         & img {
             width: 2em;

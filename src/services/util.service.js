@@ -51,3 +51,10 @@ export function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
 }
+
+export function clearSipDraft() {
+  localStorage.removeItem("form_step")
+  localStorage.removeItem("form_step1")
+  localStorage.removeItem("form_step2")
+  localStorage.removeItem("form_step3")
+}

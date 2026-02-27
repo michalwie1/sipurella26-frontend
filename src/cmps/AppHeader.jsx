@@ -22,7 +22,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<NavLink to="/" className="logo">
-					<img src='../../public/logo.jpg'></img>
+					<img src='../../public/logo_square.jpg'></img>
 				</NavLink>
 				<NavLink to="about">עלינו</NavLink>
 				<NavLink to="sip">דוגמאות</NavLink>
@@ -32,14 +32,12 @@ export function AppHeader() {
 
                 {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
 
-				{!user && <NavLink to="auth/login" className="login-link">כניסה</NavLink>}
+				{!user && <NavLink to="auth/signup" className="login-link">כניסה</NavLink>}
 				{user && (
 					<div className="user-info">
 						<Link to={`user/${user._id}`}>
-							{user.imgUrl && <img src={user.imgUrl} />}
 							{user.fullname}
 						</Link>
-						<span className="score">{user.score?.toLocaleString()}</span>
 						<button onClick={onLogout}>logout</button>
 					</div>
 				)}

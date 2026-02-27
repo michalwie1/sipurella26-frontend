@@ -54,7 +54,7 @@ export function FormStep1 ({ onSubmit, addStepParam }) {
 
       <div>
         <label htmlFor="charactersCount"></label>
-        <input type="number" min="1" max="7" placeholder="כמה דמויות ראשיות יש בסיפור?" {...register("charactersCount")} />
+        <input type="number" min="1" max="7" placeholder="כמה דמויות ראשיות יש בסיפור?" {...register("charactersCount", { valueAsNumber: true })} />
       </div>
 
       <div>

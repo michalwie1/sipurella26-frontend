@@ -133,10 +133,6 @@ async function onSaveStory() {
 }
 
 
-
-
-
-
 if (!sip || isLoading) return <Loader text="בונים את הסיפורלה שלך..." />
 
   return (

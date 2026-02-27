@@ -49,16 +49,26 @@ export function Login() {
     }
     
     return (
-        <form className="login-form" onSubmit={onLogin}>
-            <select
-                name="username"
-                value={credentials.username}
-                onChange={handleChange}>
-                    <option value="">Select User</option>
-                    {users.map(user => <option key={user._id} value={user.username}>{user.fullname}</option>)}
-            </select>
-            <button>Login</button>
-        </form>
+       <form onSubmit={onLogin}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter your username"
+          value={credentials.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          value={credentials.password}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit">Sign in</button>
+      </form>
     )
 }
 
@@ -93,11 +103,21 @@ export function Signup() {
 
     return (
         <form className="signup-form" onSubmit={onSignup}>
+
+
             <input
                 type="text"
                 name="fullname"
                 value={credentials.fullname}
-                placeholder="Fullname"
+                placeholder="שם מלא"
+                onChange={handleChange}
+                required
+            />
+            <input
+                type="email"
+                name="email"
+                value={credentials.email}
+                placeholder="כתובת מייל"
                 onChange={handleChange}
                 required
             />
@@ -105,7 +125,7 @@ export function Signup() {
                 type="text"
                 name="username"
                 value={credentials.username}
-                placeholder="Username"
+                placeholder="כינוי"
                 onChange={handleChange}
                 required
             />
@@ -113,12 +133,16 @@ export function Signup() {
                 type="password"
                 name="password"
                 value={credentials.password}
-                placeholder="Password"
+                placeholder="סיסמה"
                 onChange={handleChange}
                 required
             />
-            {/* <ImgUploader onUploaded={onUploaded} /> */}
-            <button>Signup</button>
+            
+            <button>הרשמה</button>
+
+            <p>כבר יש לך חשבון? 
+                <NavLink to="auth/login">אפשר ללחוץ כאן</NavLink>
+            </p>
         </form>
     )
 }

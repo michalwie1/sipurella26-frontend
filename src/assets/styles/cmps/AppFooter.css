@@ -2,26 +2,25 @@
 .app-footer {
     display: flex;
     align-items: center;
+    /* justify-self: center; */
     justify-content: center;
 
     min-height: 3.5rem;
 
     padding: .8rem 1rem;
     background-color: --var(clr4);
+    font-family: 'karantina-light';
 
     & p {
         margin: 0;
+        font-size: 1rem;
+        letter-spacing: 5px;
+        margin-left: 1rem;
     }
     
-    > span {
+    a {
         font-size: .8em;
+        margin-left: .5rem;
         
-        &.local-services {
-            color: --var(clr1);
-        }
-        
-        &.remote-services {
-            color: --var(clr5);
-        }
     }
 }

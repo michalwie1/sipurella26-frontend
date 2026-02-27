@@ -29,7 +29,7 @@ function getEmptySip() {
         imgs: [],
 		promptsMj: [],
 		promptsRc: [],
-		refImg: ''
+		refImg: '',
 	}
 }
 

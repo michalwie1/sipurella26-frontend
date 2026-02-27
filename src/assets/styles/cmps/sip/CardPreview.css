@@ -35,8 +35,9 @@
         padding: 10px;
         border-radius: 10px;
         border: 1px solid #ccc;
-        font-family: monospace;
-        font-size: 13px;
+        font-family: 'karantina-light';
+        font-size: 1rem;
+        letter-spacing: 3px;
         line-height: 1.35;
         height: 15rem;
         width: 25rem;

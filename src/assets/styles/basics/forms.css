@@ -4,11 +4,15 @@ button {
 	border: 0;
 	margin: .5em;
 	cursor: pointer;
-	background-color: var(--clr1);
-	color: whitesmoke;
+	background-color: var(--clr4);
+	border-radius: 1rem;
+	color: var(--clr-white);
+	font-family: 'karantina-light';
+	font-size: 1.2rem;
+	letter-spacing: 3px;
 }
 
 button:hover {
 	transition: 0.3s;
-	background-color: var(--clr1-light)
+	background-color: var(--clr1-light);
 }

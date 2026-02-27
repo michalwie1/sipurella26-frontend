@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router'
 
 import { HomePage } from './pages/HomePage'
-import { AboutUs, AboutTeam, AboutVision } from './pages/AboutUs'
+import { AboutUs } from './pages/AboutUs'
 import { SipIndex } from './pages/SipIndex.jsx'
 import { ReviewIndex } from './pages/ReviewIndex.jsx'
 import { ChatApp } from './pages/Chat.jsx'
@@ -42,8 +42,8 @@ export function RootCmp() {
                     <Route path="build" element={<Form />} />
                     <Route path="complete/:sipId" element={<FormComplete />} />
                     <Route path="complete/:sipId/prompts" element={<ImagePrompts />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
+                    <Route path="auth/login" element={<Login />} />
+                    <Route path="auth/signup" element={<Signup />} />
                 </Routes>
             </main>
             <AppFooter />

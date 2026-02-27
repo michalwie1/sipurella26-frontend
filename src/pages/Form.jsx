@@ -9,22 +9,19 @@ import {FormStep2} from '../cmps/FormStep2';
 import {FormStep3} from '../cmps/FormStep3';
 
 export function Form () {
-  // const [step, setStep] = useState(1)
   const [step, setStep] = useState(() => {
   const saved = Number(localStorage.getItem("form_step"))
   return saved || 1
 })
   const sip = useSelector(storeState => storeState.sipModule.sip)
-  const sips = useSelector(storeState => storeState.sipModule.sips)
-
-
+  // const sips = useSelector(storeState => storeState.sipModule.sips)
   const [formData, setFormData] = useState({eventType: ''})
-    const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
 
-    useEffect(() => {
-      loadSips()
-  }, [])
+  //   useEffect(() => {
+  //     loadSips()
+  // }, [])
 
 
   useEffect(() => {
@@ -34,9 +31,6 @@ export function Form () {
 
   const nextStep = () => {setStep((s) => s + 1)}
   const prevStep = () => setStep((s) => s - 1)
-
-
-  
 
   async function handleStepSubmit(data) {
     // setFormData((prev) => ({ ...prev, ...data }))
