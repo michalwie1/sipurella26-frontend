@@ -50,10 +50,10 @@ export function Form () {
 
 
   return (
-    <>
+    <section  className='form'>
       {step === 1 && <FormStep1 onSubmit={handleStepSubmit} addStepParam={addStepParam} />}
       {step === 2 && <FormStep2 onSubmit={handleStepSubmit} addStepParam={addStepParam} back={prevStep} />}
       {step === 3 && <FormStep3 onSubmit={handleStepSubmit} addStepParam={addStepParam} back={prevStep} />}
-    </>
+    </section >
   )
 }

@@ -40,7 +40,7 @@ export function FormStep2 ({ onSubmit, addStepParam, back }) {
   
 
     return (
-      <section>
+      <section className='user-form2'>
         <form onSubmit={handleSubmit(onSubmit)}>
         <h2>The Questions</h2>
         {

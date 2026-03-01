@@ -22,7 +22,8 @@
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
 
-@import "cmps/FormComplete";
+@import "cmps/sip/FormComplete";
+@import "cmps/sip/Form";
 @import "cmps/sip/SipIndex";
 @import "cmps/sip/SipList";
 @import "cmps/sip/SipPreview";

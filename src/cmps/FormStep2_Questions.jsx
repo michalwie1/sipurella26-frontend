@@ -1,3 +1,4 @@
+import { Switch } from '@mui/material'
 import { useReactMediaRecorder } from "react-media-recorder"
 import { useState } from 'react'
 import { uploadService } from "../services/upload.service"
@@ -9,7 +10,7 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
   const textPath = `details.${idx}.text`
   const recordPath = `details.${idx}.recordUrl`
 
-  const onRecordingToggle = () => {setRecordingToggle(!recordingToggle)}
+  const onRecordingToggle = () => {setRecordingToggle(prev => !prev)}
 
    const { startRecording, stopRecording } = useReactMediaRecorder({
     audio: true,
@@ -39,12 +40,18 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
     <section>
       <label htmlFor="info1">{question}</label>
       <div className='toggle'>
-        <button type="button" onClick={onRecordingToggle}>{`Toggle ${recordingToggle}`}</button>
+        <Switch
+          size="small"
+          checked={recordingToggle}
+          onClick={onRecordingToggle}
+        />
+        {/* <button type="button" onClick={onRecordingToggle}>{`Toggle ${recordingToggle}`}</button> */}
       </div>
 
       <input type="hidden" {...register(recordPath)} />
 
       
+      <div className='info'>
     {recordingToggle 
     ? <div>
         <button type="button" onClick={startRecording}>Start</button>
@@ -69,6 +76,7 @@ export function FormStep2_Questions ({ question, register, setValue, idx }) {
       />
       </div>
     }
+    </div>
 
 
 </section>
